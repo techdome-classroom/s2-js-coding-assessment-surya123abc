@@ -4,21 +4,28 @@
  */
 var isValid = function(s) {
         let stack = [];
-    let map = {
-        '(': ')',
-        '[': ']',
-        '{': '}'
+    
+    // Map of closing to opening brackets
+    const bracketMap = {
+        ')': '(',
+        '}': '{',
+        ']': '['
     };
 
-    for (let i = 0; i < s.length; i++) {
-        let char = s[i];
-        if (map[char]) {
-            stack.push(char);
-        } else {
-            let last = stack.pop();
-            if (char !== map[last]) {
+
+    for (let char of s) {
+
+        if (char in bracketMap) {
+            
+            let topElement = stack.length > 0 ? stack.pop() : '#';
+            
+            
+            if (topElement !== bracketMap[char]) {
                 return false;
             }
+        } else {
+            
+            stack.push(char);
         }
     }
 
